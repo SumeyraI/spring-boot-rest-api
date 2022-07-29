@@ -3,20 +3,15 @@ package com.spring.example.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import javax.persistence.Entity;
 
 @Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-@ToString
-public class Category extends BaseEntity{
+public class Basket extends BaseEntity{
 
-    private String categoryName;
-    private Integer code;
-
-
-
+    private int countOfProduct;
+    private double amountOfProduct;
 
 }

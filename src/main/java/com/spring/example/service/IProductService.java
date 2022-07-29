@@ -12,4 +12,6 @@ public interface IProductService {
 
 
     ProductDto updateProduct(Long id, ProductDto productDto);
+
+    ProductDto getProductById(Long id);
 }

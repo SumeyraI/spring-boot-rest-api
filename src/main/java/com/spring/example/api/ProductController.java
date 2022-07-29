@@ -49,4 +49,11 @@ public class ProductController {
 
     }
 
+    @GetMapping({"/getProductById/{id}"})
+    public ResponseEntity<ProductDto> getById(@PathVariable ("id") Long id){
+
+        ProductDto productDto=iProductService.getProductById(id);
+        return ResponseEntity.ok(productDto);
+    }
+
 }

@@ -8,7 +8,12 @@ import com.spring.example.exception.NotFoundException;
 import com.spring.example.repository.UserRepository;
 import com.spring.example.service.IUserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -85,5 +90,15 @@ public class UserServiceImpl implements IUserService {
 
         User user=userRepository.findById(id).orElseThrow(()->new NotFoundException("User not found"));
         userRepository.deleteById(user.getId());
+    }
+
+    @Override
+    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
+    public List<UserDto> sliceUser(Pageable pageable) {
+
+        Page<User> users=userRepository.findAll(pageable);
+        List<UserDto> userDtos =users.stream().map(user -> modelMapper.map(user,UserDto.class)).collect(Collectors.toList());
+
+        return userDtos ;
     }
 }

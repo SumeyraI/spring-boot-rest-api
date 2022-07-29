@@ -23,6 +23,10 @@ public class Product extends BaseEntity{
 
     private String description;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "basketId")
+    private  Basket basket;
+
 
 
 

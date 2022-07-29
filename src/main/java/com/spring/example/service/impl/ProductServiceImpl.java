@@ -58,5 +58,13 @@ public class ProductServiceImpl implements IProductService {
 
     }
 
+    @Override
+    public ProductDto getProductById(Long id) {
+
+        Product product=productRepository.findById(id).orElseThrow(()->new NotFoundException("The product not found"));
+        return modelMapper.map(product,ProductDto.class);
+
+    }
+
 
 }

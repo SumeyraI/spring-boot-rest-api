@@ -1,12 +1,10 @@
 package com.spring.example.api;
 
 import com.spring.example.dto.UserDto;
-import com.spring.example.entities.User;
 import com.spring.example.service.IUserService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.Id;
 import java.util.List;
 
 @RestController
@@ -27,9 +25,9 @@ public class UserController {
     @GetMapping("/getAll")
     public ResponseEntity<List<UserDto>> getUsers(){
 
-        List<UserDto> allUser =userService.getUsers();
-        return ResponseEntity.ok(allUser);
+        return ResponseEntity.ok(userService.getUsers());
     }
+
     @GetMapping({"/getById/{id}"})
     public ResponseEntity<UserDto> findById(@PathVariable("id") Long id){
 
@@ -38,6 +36,7 @@ public class UserController {
 
        // return  ResponseEntity.ok(userService.findById(id)); Yukarıdaki kod ile aynı işi yapıyor mu diye kontrol et !!!
     }
+
     @GetMapping({"/findByName/{firstname}"})
     private ResponseEntity<UserDto> findByName(@PathVariable ("firstname") String firstname){
 
@@ -51,9 +50,17 @@ public class UserController {
         UserDto updateUser=userService.updateUser(id,userDto);
         return  ResponseEntity.ok(updateUser);
     }
+
     @DeleteMapping("/deleteUser/{id}")
     public void deleteUser(@PathVariable ("id") Long id){
+
         userService.deleteUser(id);
+    }
+
+    @GetMapping("/getUserPageable")
+    public ResponseEntity<List<UserDto>> sliceUser(Pageable pageable){
+
+        return ResponseEntity.ok(userService.sliceUser(pageable));
     }
 
 }
